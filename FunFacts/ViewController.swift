@@ -50,44 +50,25 @@ class ViewController: UIViewController, sendDataToViewProtocol {
     @IBOutlet weak var greenBishop2: UIImageView!
     @IBOutlet weak var greenKnight2: UIImageView!
     @IBOutlet weak var greenChariot2: UIImageView!
-   
-    func instantiateEveything() {
+    
+    @IBOutlet weak var chariot1WidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var redSoldier1TopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var redCannon1TopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var greenSoldier1BottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var grrenCannon1BottomConstraint: NSLayoutConstraint!
+        
+    let sizeWidth = (UIScreen.main.bounds.width - 15) / 9
+    
+    func instantiateEveything() {        
+        chariot1WidthConstraint.constant = sizeWidth
+        
+        redSoldier1TopConstraint.constant = sizeWidth * 3
+        redCannon1TopConstraint.constant = sizeWidth
+        greenSoldier1BottomConstraint.constant = sizeWidth * 3
+        grrenCannon1BottomConstraint.constant = -sizeWidth
         
         // load images
         funFactLabel.text = factProvider.randomFact()
-        imageView.image = UIImage(named:"hh 2.png")
-        redChariot1.image = UIImage(named: "Red_Root.png")
-        redChariot2.image = UIImage(named: "Red_Root copy.png")
-        redKnight1.image = UIImage(named: "Red_Ma.png")
-        redKnight2.image = UIImage(named: "Red_Ma copy.png")
-        redBishop1.image = UIImage(named: "Red_Xiang.png")
-        redBishop2.image = UIImage(named: "Red_Xiang copy.png")
-        redGuard1.image = UIImage(named: "Red_Shi.png")
-        redGuard2.image = UIImage(named: "Red_Shi copy.png")
-        redCannon1.image = UIImage(named: "Red_Pao.png")
-        redCannon2.image = UIImage(named: "Red_Pao copy.png")
-        redKing.image = UIImage(named: "Red_King.png")
-        redSoldier1.image = UIImage(named: "Red_Bing.png")
-        redSoldier2.image = UIImage(named: "Red_Bing copy.png")
-        redSoldier3.image = UIImage(named: "Red_Bing copy 2.png")
-        redSoldier4.image = UIImage(named: "Red_Bing copy 3.png")
-        redSoldier5.image = UIImage(named: "Red_Bing copy 4.png")
-        greenChariot1.image = UIImage(named: "Green_Che.png")
-        greenChariot2.image = UIImage(named: "Green_Che copy.png")
-        greenKnight1.image = UIImage(named: "Green_Ma.png")
-        greenKnight2.image = UIImage(named: "Green_Ma copy.png")
-        greenCannon1.image = UIImage(named: "Green_Pao.png")
-        greenCannon2.image = UIImage(named: "Green_Pao copy.png")
-        greenBishop1.image = UIImage(named: "Green_Xiang.png")
-        greenBishop2.image = UIImage(named: "Green_Xiang copy.png")
-        greenGuard1.image = UIImage(named: "Green_Shi.png")
-        greenGuard2.image = UIImage(named: "Green_Shi copy.png")
-        greenKing.image = UIImage(named: "Green_King.png")
-        greenSoldier1.image = UIImage(named: "Green_Zu.png")
-        greenSoldier2.image = UIImage(named: "Green_Zu copy.png")
-        greenSoldier3.image = UIImage(named: "Green_Zu copy 2.png")
-        greenSoldier4.image = UIImage(named: "Green_Zu copy 3.png")
-        greenSoldier5.image = UIImage(named: "Green_Zu copy 4.png")
         
         // set images
         redChariot1.center = convertPositionToCgpoint(position: chariot1.initPosition)
@@ -106,6 +87,7 @@ class ViewController: UIViewController, sendDataToViewProtocol {
         redSoldier3.center = convertPositionToCgpoint(position: soldrier3.initPosition)
         redSoldier4.center = convertPositionToCgpoint(position: soldrier4.initPosition)
         redSoldier5.center = convertPositionToCgpoint(position: soldrier5.initPosition)
+        
         greenChariot1.center = convertPositionToCgpoint(position: chariot3.initPosition)
         greenChariot2.center = convertPositionToCgpoint(position: chariot4.initPosition)
         greenKnight1.center = convertPositionToCgpoint(position: knight3.initPosition)
@@ -122,10 +104,6 @@ class ViewController: UIViewController, sendDataToViewProtocol {
         greenSoldier3.center = convertPositionToCgpoint(position: soldrier8.initPosition)
         greenSoldier4.center = convertPositionToCgpoint(position: soldrier9.initPosition)
         greenSoldier5.center = convertPositionToCgpoint(position: soldrier10.initPosition)
-        
-        // imgView: position dictionary
-        imgViewPosition.removeAll()
-        imgViewPosition = [redChariot1: redChariot1.center, redChariot2: redChariot2.center, redKnight1: redKnight1.center, redKnight2: redKnight2.center, redBishop1: redBishop1.center, redBishop2: redBishop2.center, redGuard1: redGuard1.center, redGuard2: redGuard2.center, redKing: redKing.center, redCannon1: redCannon1.center, redCannon2: redCannon2.center, redSoldier1: redSoldier1.center, redSoldier2: redSoldier2.center, redSoldier3: redSoldier3.center, redSoldier4: redSoldier4.center, redSoldier5: redSoldier5.center, greenChariot1: greenChariot1.center, greenChariot2: greenChariot2.center, greenKnight1: greenKnight1.center, greenKnight2: greenKnight2.center, greenCannon1: greenCannon1.center, greenCannon2: greenCannon2.center, greenBishop1: greenBishop1.center, greenBishop2: greenBishop2.center, greenGuard1: greenGuard1.center, greenGuard2: greenGuard2.center, greenKing: greenKing.center, greenSoldier1: greenSoldier1.center, greenSoldier2: greenSoldier2.center, greenSoldier3: greenSoldier3.center, greenSoldier4: greenSoldier4.center, greenSoldier5: greenSoldier5.center]
     }
     
     override func viewDidLoad() {
@@ -133,10 +111,26 @@ class ViewController: UIViewController, sendDataToViewProtocol {
         instantiateEveything()
     }
     
-    func reset(){
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        updatePositionDictionary()
+    }
+    
+    func reset() {
         count = 1
         resetAllPieces()
         instantiateEveything()
+        updatePositionDictionary()
+    }
+    
+    fileprivate func updatePositionDictionary() {
+        // imgView: position dictionary
+        imgViewPosition.removeAll()
+        imgViewPosition = [redChariot1: redChariot1.center, redChariot2: redChariot2.center, redKnight1: redKnight1.center, redKnight2: redKnight2.center, redBishop1: redBishop1.center, redBishop2: redBishop2.center, redGuard1: redGuard1.center, redGuard2: redGuard2.center, redKing: redKing.center, redCannon1: redCannon1.center, redCannon2: redCannon2.center, redSoldier1: redSoldier1.center, redSoldier2: redSoldier2.center, redSoldier3: redSoldier3.center, redSoldier4: redSoldier4.center, redSoldier5: redSoldier5.center, greenChariot1: greenChariot1.center, greenChariot2: greenChariot2.center, greenKnight1: greenKnight1.center, greenKnight2: greenKnight2.center, greenCannon1: greenCannon1.center, greenCannon2: greenCannon2.center, greenBishop1: greenBishop1.center, greenBishop2: greenBishop2.center, greenGuard1: greenGuard1.center, greenGuard2: greenGuard2.center, greenKing: greenKing.center, greenSoldier1: greenSoldier1.center, greenSoldier2: greenSoldier2.center, greenSoldier3: greenSoldier3.center, greenSoldier4: greenSoldier4.center, greenSoldier5: greenSoldier5.center]
+    }
+    
+    @IBAction func restart(_ sender: Any) {
+        reset()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -184,7 +178,7 @@ class ViewController: UIViewController, sendDataToViewProtocol {
         return !(king1.isActive() && king2.isActive())
     }
     
-    func gameOverProcedure(){
+    func gameOverProcedure() {
         let popOverVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "sbPopUpId") as! PopUpViewController
         popOverVC.delegate = self
         self.addChildViewController(popOverVC)
@@ -203,7 +197,7 @@ class ViewController: UIViewController, sendDataToViewProtocol {
     }
     
     func findImageView(given position: Position) -> UIImageView? {
-        for element in self.imgViewPosition{
+        for element in self.imgViewPosition {
             if convertCgpointToPosition(cgp: element.value).x == position.x && convertCgpointToPosition(cgp: element.value).y == position.y {
                 return element.key
             }
@@ -234,60 +228,3 @@ class ViewController: UIViewController, sendDataToViewProtocol {
         selectedImgView.removeAll()
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
